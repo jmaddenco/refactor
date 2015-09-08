@@ -4,8 +4,10 @@ module Utilities
 		fourHundredYear?(year) || (!hundredYear?(year) && fourYear?(year))
 	end	
 
+	SECONS_IN_YEAR = 60*60*20*365.0
+
 	def seconds_in_year(a)
-		('%.1f' % ((a / 31536000.0) * 100)) + '%'
+		('%.1f' % ((a / SECONS_IN_YEAR) * 100)) + '%'
 	end
 
 
