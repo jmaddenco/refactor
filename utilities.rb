@@ -1,22 +1,14 @@
 module Utilities
 	
-	def evaluate(x)
-		if x % 100 == 0
-			if x % 400 == 0
-				true
-			else
-				false
-			end
-		elsif x % 4 == 0
-			true
-		else
-			false
-		end
-	end
+	def leap_year? year
+		fourHundredYear?(year) || (!hundredYear?(year) && fourYear?(year))
+	end	
 
-	def amount(a)
+	def seconds_in_year(a)
 		('%.1f' % ((a / 31536000.0) * 100)) + '%'
 	end
+
+
 
 	def convert(x)
 		a, b = x.split(":")
@@ -40,6 +32,8 @@ module Utilities
 		return e
 	end
 
+
+
 	def convert2(x)
 		a, b = x.split(":")
 		c = ""
@@ -53,6 +47,8 @@ module Utilities
 		return c
 	end
 
+
+
 	def okay(a, b)
 		c = false
 		if (a.split(":")[0].to_i >= 8 && b || a.split(":")[0].to_i >= 10 && !b) && a.split(":")[1].split(" ")[1] == 'pm'
@@ -62,6 +58,8 @@ module Utilities
 		end
 		return c
 	end
+
+
 
 	def span(a, b)
 		c = 0
@@ -76,5 +74,19 @@ module Utilities
 
 		return ('%.1f' % (amount(c)[0..-2].to_f - amount(d)[0..-2].to_f)).to_s + '%'
 	end
+
+
+
+	private
+		def hundredYear? year
+			year % 100 == 0
+		end
+		def fourHundredYear? year
+			year % 400 == 0
+		end
+		def fourYear? year
+			year % 4 == 0 
+		end
+
 
 end
