@@ -1,44 +1,20 @@
 module Utilities
+
+SECONDS_IN_A_YEAR = 60 * 60 * 24 * 365.0
 	
-	def leap_year? year
-		fourHundredYear?(year) || (!hundredYear?(year) && fourYear?(year))
-	end	
-
-	SECONDS_IN_YEAR = 60*60*20*365.0
-
-	def seconds_in_year(a)
-		('%.1f' % ((a / SECONDS_IN_YEAR) * 100)) + '%'
+	def leap_year?(x)
+		isFourHundred?(x) || (!isHundred?(x) && isFourYear?(x))
 	end
 
-
-
-	def convert(x)
-		a, b = x.split(":")
-		#.split = split the a, b string that has : into two seperate stings.
-		c, d = b.split(" ")
-		#.split = split the c, d string that has a space into two different strings 
-		e = ""
-
-		if d.downcase != 'am'
-			if a.to_i == 12
-				e = a + ":" + c
-			else
-				e = (a.to_i + 12).to_s + ":" + c
-			end
-		elsif d.downcase != 'pm'
-			if a.to_i == 12
-				e = (a.to_i - 12).to_s + ":" + c
-			else
-				e = a + ":" + c
-			end
-		end
-
-		return e
+	def year_percent_in_seconds?(a)
+		('%.1f' % ((a / SECONDS_IN_A_YEAR) * 100)) + '%'
 	end
 
+	def convert_to_military_time(x)
+		is_am?(x) ? convert_am(x) : convert_pm(x) 
+	end
 
-
-	def convert2(x)
+	def convert_from_military_time time
 		a, b = x.split(":")
 		c = ""
 
@@ -51,8 +27,6 @@ module Utilities
 		return c
 	end
 
-
-
 	def okay(a, b)
 		c = false
 		if (a.split(":")[0].to_i >= 8 && b || a.split(":")[0].to_i >= 10 && !b) && a.split(":")[1].split(" ")[1] == 'pm'
@@ -62,8 +36,6 @@ module Utilities
 		end
 		return c
 	end
-
-
 
 	def span(a, b)
 		c = 0
@@ -79,23 +51,72 @@ module Utilities
 		return ('%.1f' % (amount(c)[0..-2].to_f - amount(d)[0..-2].to_f)).to_s + '%'
 	end
 
-
-	m = Class.new do
-  		include Utilities
-	end.new
-
-	puts  m.okay "6:00", true
-
 	private
-		def hundredYear? year
-			year % 100 == 0
-		end
-		def fourHundredYear? year
-			year % 400 == 0
-		end
-		def fourYear? year
-			year % 4 == 0 
+
+		def isHundred?(x)
+			x % 100 == 0
 		end
 
+		def isFourHundred?(x)
+			x % 400 == 0
+		end
+
+		def isFourYear?(x)
+			x % 4 == 0
+		end
+
+
+		def is_am?(x)
+			a, b = x.split(":")
+			c, d = b.split(" ")
+
+			d.downcase == 'am' ? true : false
+		end
+
+		def convert_am(x)
+			a, b = x.split(":")
+			c, d = b.split(" ")
+			e = ""
+
+			a.to_i == 12 ? e = (a.to_i - 12).to_s + ":" + c : e = a + ":" + c
+			return e
+		end
+
+		def convert_pm(x)
+			a, b = x.split(":")
+			c, d = b.split(" ")
+			e = ""
+
+			a.to_i == 12 ? e = a + ":" + c : e = (a.to_i + 12).to_s + ":" + c
+			return e
+		end
+
+		def pa? x
+			a, b = x.split(":")
+			
+			a.to_i >= 12 ? true : false
+		end
+
+		def convert_to_am x
+			a, b = x.split(":")
+			penis (a, b false)
+		end
+
+		def convert_to_pm x
+			a, b = x.split(":")
+			c = ""
+
+			a.to_i == 12 ? c = a + ":" + b + "pm" 
+		end
+
+		def penis a, b, am_pm?
+			c = ""
+			if pm?
+				c = a + ":" + b + "pm"
+			else
+				c = a + ":" + b + "am"
+			end
+		end
+		end
 
 end
