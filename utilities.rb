@@ -4,17 +4,19 @@ module Utilities
 		fourHundredYear?(year) || (!hundredYear?(year) && fourYear?(year))
 	end	
 
-	SECONS_IN_YEAR = 60*60*20*365.0
+	SECONDS_IN_YEAR = 60*60*20*365.0
 
 	def seconds_in_year(a)
-		('%.1f' % ((a / SECONS_IN_YEAR) * 100)) + '%'
+		('%.1f' % ((a / SECONDS_IN_YEAR) * 100)) + '%'
 	end
 
 
 
 	def convert(x)
 		a, b = x.split(":")
+		#.split = split the a, b string that has : into two seperate stings.
 		c, d = b.split(" ")
+		#.split = split the c, d string that has a space into two different strings 
 		e = ""
 
 		if d.downcase != 'am'
@@ -78,6 +80,11 @@ module Utilities
 	end
 
 
+	m = Class.new do
+  		include Utilities
+	end.new
+
+	puts  m.okay "6:00", true
 
 	private
 		def hundredYear? year
